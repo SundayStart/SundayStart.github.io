@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台词计算器</title>
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style type="text/css">
+	body {
+		padding-top: 60px;
+	}
+	.statistical-res {
+		font-size: 2em;
+		color: #009a61;
+	}
+	.so_footer {
+	    margin-top: 20px;
+	    padding: 20px 0;
+	    color: #999;
+	    text-align: center;
+	    background-color: #f8f8f8;
+	    border-top: 1px solid #e5e5e5;
+	}
+	#cal-res {
+		min-height: 100px;
+	}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Lines Calculator</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="http://www.sundaystart.net">About</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="container-fluid">
+	<!-- The text input field -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">文本内容</h1>
+			<textarea id="line-input" rows="20" style="width: 100%"
+					placeholder="<请在此输入内容>"></textarea>
+		</div>
+	</div>
+	<!-- The calculate result -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">统计结果</h1>
+			<div id="statistical-res">
+				<h3 class="page-header">字数统计</h3>
+				<p>汉字：<span id="hanzi" class="statistical-res">0</span>个，标点：<span id="biaodian" class="statistical-res">0</span>个，字母：<span id="zimu" class="statistical-res">0</span>个，数字：<span id="shuzi" class="statistical-res">0</span>个。
+				<p class="text-primary">PS: 仅统计中文引号<code>“”</code>内的文本内容，且会将其高亮显示 (引号会被去除) 在下面</p>
+			</div>
+			<h3 class="page-header">文本高亮</h3>
+			<div id="cal-res"></div>
+		</div>
+	</div>
+</div>
+
+<footer class="so_footer">
+    <p>Powered by <a href="http://www.sundaystart.net">SundayStart</a>.</p>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function CountChineseCharacters(k){Words=k;var b=new Object();var d=new Array();var n=0;var f=0;var m=0;var l=0;var g=0;var e=0;var h=0;var a=0;for(i=0;i<Words.length;i++){var j=Words.charAt(i);if(j.match(/[\u4e00-\u9fa5]/)){if(isNaN(b[j])){n++;b[j]=1}l++}}for(i=0;i<Words.length;i++){var j=Words.charAt(i);if(j.match(/[^\x00-\xff]/)){if(isNaN(b[j])){f++}m++}else{g++}if(j.match(/[0-9]/)){a++}}$("#hanzi").text(l);$("#biaodian").text((m-l-2));$("#zimu").text(g-a);$("#shuzi").text(a)}$(document).ready(function(){const b=/\“(.*?)\”/;const a=/\“(.*?)\”/g;$("#line-input").change(function(){var h=$(this).val();if(h.match(a)){var c=h.match(a).length;for(var e=0;e<c;e++){h=h.replace(h.match(b)[0],"<code>"+RegExp.$1+"</code>")}var f=h.split("\n");var g=f.map(function(j){return"<p>"+j+"</p>"});h=g.join("\n");$("#cal-res").html(h);var d=$("code").text();CountChineseCharacters(d)}else{$("#cal-res").text(h)}});if($(document.body).height()<$(window).height()){$(".so_footer").addClass("navbar navbar-fixed-bottom")}});
+</script>
+</body>
+</html>
